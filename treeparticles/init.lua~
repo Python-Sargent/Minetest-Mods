@@ -1,0 +1,46 @@
+local modpath = minetest.get_modpath("treeparticles")
+
+treeparticles = {}
+
+treeparticles.leaves_above = function(pos)
+	posup = {x=pos.x, y=pos.y + 1, z=pos.z}
+	if minetest.get_node(posup).name == "treeparticles:leaves" then
+		return true
+	elseif minetest.get_node(posup).name == "treeparticles:tree" then
+		return treeparticles.leaves_above(posup)
+	end
+end
+
+minetest.register_node("treeparticles:tree", {
+	description = "Tree",
+	paramtype = "light",
+	drawtype = "normal",
+	tiles = {
+		"treeparticles_tree.png"
+		"treeparticles_tree.png"
+		"treeparticles_tree_side.png"
+		"treeparticles_tree_side.png"
+		"treeparticles_tree_side.png"
+		"treeparticles_tree_side.png"
+	},
+	walkable = true,
+	climbable = false,
+	sunlight_propagates = false,
+	groups = {choppy=2, burns=1,},
+	on_punch, after_dig = function(pos)
+		if treeparticles.leaves_above() then
+			--make particles
+		end
+	end
+})
+
+minetest.register_node("treeparticles:leaves", {
+	description = "Leaves",
+	paramtype = "light",
+	drawtype = "glasslike",
+	tiles = {"treeparticles_leaves.png"},
+	walkable = true,
+	climbable = true,
+	sunlight_propagates = true,
+	groups = {snappy=3, leafdecay=1, leaves=1, burns=1,},
+})
