@@ -1,0 +1,1 @@
+This mod introduces a number of real and fake metals to minetest, including many different types of metals (ore, sediment, trace, and nautral alloy).
